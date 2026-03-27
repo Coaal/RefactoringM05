@@ -18,11 +18,7 @@ public class StatementPrinter {
 
             var thisAmount = calculateAmount(performance, play);
 
-            volumeCredits += Math.max(performance.audience - 30, 0);
-
-            if ("comedy".equals(play.type)) {
-                volumeCredits += performance.audience / 5;
-            }
+            volumeCredits += calculateVolumeCredits(performance, play);
 
             result += String.format(
                     "  %s: %s (%s seats)\n",
@@ -64,5 +60,15 @@ public class StatementPrinter {
         }
 
         return result;
+    }
+
+    private int calculateVolumeCredits(Performance performance, Play play) {
+        int credits = Math.max(performance.audience - 30, 0);
+
+        if ("comedy".equals(play.type)) {
+            credits += performance.audience / 5;
+        }
+
+        return credits;
     }
 }
